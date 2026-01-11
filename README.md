@@ -6,6 +6,7 @@
 
 **Tools used:**
 1. VS Code for coding.
+2. Kaggle for list of commonly used passwords.
 
 **Skills gained/used:**
 * Critical Thinking
