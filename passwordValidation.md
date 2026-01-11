@@ -22,7 +22,7 @@ To create a program that will check password strength by making sure user input 
 | Input | Conditions Checked | Expected Output | Actual Output |
 | ----- | ------------------ | --------------- | ------------- |
 | password | common password, no uppercase, no symbols | error (common) | Error: Your password is too common |
-| 123456 | common password, no lowercase, no uppercase | error (common) | Error: Your password is too common |
+| 123456 | common password, too short, no lowercase, no uppercase | error (common) | Error: Your password is too common |
 | HELLO123 | no lowercase | error | Error: Your password does not have a lowercase letter |
 | hello1234 | no uppercase | eroror | Error: Your password does not have an uppercase letter |
 | HelloWorld | no symbols | error | Error: Your password does not have a special symbol or a digit |
@@ -34,4 +34,5 @@ I have successfully written a program to validate passwords by making sure they 
 
 ## **Next steps:**
 My program could be improved by making the code more efficient in general.
+
 
