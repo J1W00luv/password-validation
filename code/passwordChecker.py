@@ -40,7 +40,7 @@ def isPresent(user_password, array):
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    filePath = r"C:\Users\oksan\OneDrive\Документы\folioBuilding\python\common_passwords.csv"
+    filePath = r"common_passwords.csv"
     commonPasswords = readFile(filePath)
 
     isStrong = False
@@ -77,3 +77,4 @@ def main():
     print("Well done! Your password is strong")
 
 main()
+
