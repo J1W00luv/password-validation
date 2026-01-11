@@ -1,31 +1,79 @@
 import string
+import csv
+import os
 
-lowercase = string.ascii_lowercase
-uppercase = string.ascii_uppercase
-symbols = string.digits + string.punctuation
+def readFile(file_path):
+    with open(file_path, newline='') as f:
+        common_passwords = ["" for x in range(len(f.readlines()))]
+        counter = 0
 
-isStrong2 = False
+        f.seek(0)
+        
+        readfile = csv.reader(f)
+        
+        for row in readfile:
+            common_passwords[counter] = row[0]
+            counter += 1
+    return common_passwords[1:]
 
-while isStrong2 == False:
-    userPassword = input("Enter your password: ")
-    isStrong = [False for x in range(3)]
+def getPassword():
+    user_password = input("Enter your password: ")
+    return user_password
 
-    if len(userPassword) >= 8:
-        for x in userPassword:
-            if x in lowercase:
-                isStrong[0] = True
-            elif x in uppercase:
-                isStrong[1] = True
-            elif x in symbols:
-                isStrong[2] = True
-            else:
-                print("Error: Seems like you used a banned character")
-    else:
-        print("Error: Password is too short")
+def isCommon(user_password, common_passwords):
+    for password in common_passwords:
+        if user_password == password:
+            return False
+    return True
+
+def isLong(user_password):
+    if len(user_password) >= 8:
+        return True
+    return False
+
+def isPresent(user_password, array):
+    for x in user_password:
+        if x in array:
+            return True
+    return False
+
+def main():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+    filePath = r"C:\Users\oksan\OneDrive\Документы\folioBuilding\python\common_passwords.csv"
+    commonPasswords = readFile(filePath)
+
+    isStrong = False
+
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase
+    symbols = string.digits + string.punctuation
+
+    errors = ["Error: Your password is too common", "Error: Your password is too short",
+              "Error: Your password does not have a lowercase letter", "Error: Your password does not have an uppercase letter",
+              "Error: Your password does not have a special symbol or a digit"]
+
+    while isStrong == False:
+        userPassword = getPassword()
+        isValid = [False for x in range(5)] # array to track met conditions for a strong password
+
+        isValid[0] = isCommon(userPassword, commonPasswords)
+        isValid[1] = isLong(userPassword)
+        isValid[2] = isPresent(userPassword, lowercase)
+        isValid[3] = isPresent(userPassword, uppercase)
+        isValid[4] = isPresent(userPassword, symbols)
+
+        validCount = 0 # to count amount of met conditions
+
+        for x in range(5): # 5 is length of isValid array
+            if isValid[x] == True:
+                validCount += 1
+            elif (x - validCount) == 0: # check to only print one (first) error at a time
+                print(errors[x])
+
+        if validCount == 5:
+            isStrong = True
     
-    if isStrong[0] == True and isStrong[1] == True and isStrong[2] == True:
-        isStrong2 = True
-    elif len(userPassword) >= 8: # only display error if the previous one (too short) is not shown
-        print("Error: Password is not strong enough. Try using uppercase & lowercase letters and special symbols!")
+    print("Well done! Your password is strong")
 
-print("Good job")
+main()
